@@ -1,5 +1,6 @@
 package com.springbootstudy.demo.controller;
 
+import com.springbootstudy.demo.Annotation.SystemControllerLog;
 import com.springbootstudy.demo.entity.User;
 import com.springbootstudy.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UserController  {
     @Autowired
     private UserService userService;
 
-
+    @SystemControllerLog(description = "getUserInfoByID")
     @RequestMapping(value = "/getUserById", method= RequestMethod.GET)
     public    User getProjectDescription(@RequestParam(value = "id" ) Integer id) throws Exception {
         User user=userService.getUserById(id);
