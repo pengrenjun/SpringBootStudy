@@ -8,7 +8,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @MapperScan("com.springbootstudy.demo.mapper.*")
@@ -30,7 +34,10 @@ public class DemoApplication {
 
 		//3、在convert中添加配置信息.
 		fastConverter.setFastJsonConfig(fastJsonConfig);
-
+        /*解决返回的JSON数据乱码的问题*/
+		List<MediaType> fastMediaTypes = new ArrayList<>();
+		fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+		fastConverter.setSupportedMediaTypes(fastMediaTypes);
 
 		HttpMessageConverter<?> converter = fastConverter;
 		return new HttpMessageConverters(converter);

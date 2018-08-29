@@ -1,4 +1,5 @@
 package com.springbootstudy.demo.service;
+import com.springbootstudy.demo.Annotation.SystemServiceLog;
 import com.springbootstudy.demo.entity.User;
 import com.springbootstudy.demo.mapper.User.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService  {
 
 
     @Override
+    @SystemServiceLog(description = "getUserInfoById :servie")
     public User getUserById(Integer id) {
 
         return userRepository.findById(id).get();
