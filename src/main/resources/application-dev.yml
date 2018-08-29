@@ -1,0 +1,42 @@
+server:
+  port: 8081
+  tomcat:
+    uri-encoding: utf-8
+
+
+project :
+  content: "开发环境"
+spring:
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springstudy
+    username: root
+    password: 123456
+    max-active: 20
+    max-idle: 8
+    min-idle: 8
+    initial-size: 10
+
+  jpa:
+  #ddl-auto:update 通过建立实例bean自动创建更新数据表
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  #页面修改项目会自动更新内容  开发关闭themleaf缓存
+  thymeleaf:
+    cache: false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
