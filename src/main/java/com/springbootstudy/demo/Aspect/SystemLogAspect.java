@@ -25,7 +25,7 @@ import java.util.UUID;
 
 
 /**
- * 日志管理 Controller Service 切点类
+ * 日志管理 Controller Service 切点类 通过AOP简化程序里面的日志信息打印
  */
 @Aspect
 @Component

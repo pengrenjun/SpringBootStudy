@@ -1,6 +1,8 @@
 package com.springbootstudy.demo.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,8 @@ import java.sql.Date;
  * @version:1.0
  */
 @Entity
+@Getter
+@Setter
 public class User implements Serializable {
 
     @Id
@@ -34,43 +38,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public Integer getId() {
-        return id;
+    public static void main(String[] args) {
+        User user=new User();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 }
