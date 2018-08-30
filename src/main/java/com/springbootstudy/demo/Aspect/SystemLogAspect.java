@@ -1,22 +1,28 @@
 package com.springbootstudy.demo.Aspect;
 
+
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springbootstudy.demo.Annotation.SystemControllerLog;
 import com.springbootstudy.demo.Annotation.SystemServiceLog;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.util.Enumeration;
+import java.util.UUID;
+
 
 /**
  * 日志管理 Controller Service 切点类
@@ -27,6 +33,10 @@ public class SystemLogAspect {
 
     //本地异常日志记录对象
     private  static  final Logger logger = LoggerFactory.getLogger(SystemLogAspect. class);
+
+    private static ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+    private static ThreadLocal<String> key = new ThreadLocal<String>();
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
     //Service层切点
     @Pointcut("@annotation(com.springbootstudy.demo.Annotation.SystemServiceLog)")
@@ -39,7 +49,7 @@ public class SystemLogAspect {
     }
 
     /**
-     * 前置通知 用于拦截Controller层记录用户的操作
+     * 前置通知 用于拦截Controller层记录用户的操作  拦截请求参数,请求头信息,响应结果,响应时间
      *
      * @param joinPoint 切点
      */
@@ -47,14 +57,58 @@ public class SystemLogAspect {
     public  void doBefore(JoinPoint joinPoint) {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
+        System.out.println("=====前置通知开始=====");
         //读取session中的用户
         //User user = (User) session.getAttribute(WebConstants.CURRENT_USER);
         //请求的IP
         String ip = request.getRemoteAddr();
         try {
+            // 请求开始时间
+            startTime.set(System.currentTimeMillis());
+
+            // 获取请求头
+            Enumeration<String> enumeration = request.getHeaderNames();
+            StringBuffer headers = new StringBuffer();
+            while (enumeration.hasMoreElements()) {
+                String name = enumeration.nextElement();
+                String value = request.getHeader(name);
+                headers.append(name + ":" + value).append(",");
+            }
+            String uri = UUID.randomUUID() + "|" + request.getRequestURI();
+
+            String method = request.getMethod();
+            StringBuffer params = new StringBuffer();
+            if (HttpMethod.GET.toString().equals(method)) {// get请求
+                String queryString = request.getQueryString();
+                if (!StringUtils.isEmpty(queryString)) {
+                    params.append(queryString);//URLEncodedUtils.encode(queryString, "UTF-8")
+                }
+            } else {//其他请求
+                Object[] paramsArray = joinPoint.getArgs();
+                if (paramsArray != null && paramsArray.length > 0) {
+                    for (int i = 0; i < paramsArray.length; i++) {
+                        if (paramsArray[i] instanceof Serializable) {
+                            params.append(paramsArray[i].toString()).append(",");
+                        } else {
+                            //使用json系列化 反射等等方法 反系列化会影响请求性能建议重写tostring方法实现系列化接口
+                            try {
+                                String param= objectMapper.writeValueAsString(paramsArray[i]);
+                                if(!StringUtils.isEmpty(param))
+                                    params.append(param).append(",");
+                            } catch (JsonProcessingException e) {
+                                logger.error("doBefore obj to json exception obj={},msg={}",paramsArray[i],e);
+                            }
+                        }
+                    }
+                }
+            }
+            key.set(uri);
+            logger.info("request params>>>>>>uri={},method={},params={},headers={}", uri, method, params, headers);
+
+
             //*========控制台输出=========*//
-            System.out.println("=====前置通知开始=====");
+
             System.out.println("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
             System.out.println("方法描述:" + getControllerMethodDescription(joinPoint));
             //System.out.println("请求人:" + user.getName());
@@ -79,6 +133,34 @@ public class SystemLogAspect {
             logger.error("异常信息:{}", e.getMessage());
         }
     }
+
+    /**
+     * Controller层 在方法执行后打印返回内容
+     *
+     * @param obj
+     */
+    @AfterReturning(returning = "obj", pointcut = "controllerAspect()()")
+    public void doAfterReturing(Object obj) {
+        long costTime = System.currentTimeMillis() - startTime.get();
+        String uri = key.get();
+        startTime.remove();
+        key.remove();
+        String result= null;
+        if(obj instanceof Serializable){
+            result =  obj.toString();
+        }else {
+            if(obj != null) {
+                try {
+                    result = objectMapper.writeValueAsString(obj);
+                } catch (JsonProcessingException e) {
+                    logger.error("doAfterReturing obj to json exception obj={},msg={}",obj,e);
+                }
+            }
+        }
+        System.out.println(" Controller @AfterReturning:后置通知获取返回结果 执行时间： ");
+        logger.info("response result<<<<<<uri={},result={},costTime={}ms", uri, JSONObject.toJSONString(result), costTime);
+    }
+
 
     /**
      * 异常通知 用于拦截service层记录异常日志
