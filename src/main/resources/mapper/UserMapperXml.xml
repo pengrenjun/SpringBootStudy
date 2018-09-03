@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springbootstudy.demo.mapper.User.UserMapper">
+
+    <select id="getAllUsers" resultType="com.sprigbootstudy.demo.entity.User" >
+     select * from  USER
+    </select>
+
+    <insert id="insertNewUser">
+        /*Mysql数据库插入时不需指定id,Mysql会自动生成;但在Oracle数据库中要指定id 因为在执行selectKey之后就生成了id 这个id要插入到数据库中*/
+        INSERT  INTO  user(name,birthday,comments,location)
+        VALUES (#{name},#{birthday},#{comments},#{location})
+        /*返回自增主键 Mysql自增主键*/
+        <selectKey keyProperty="id" keyColumn="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+
+</mapper>

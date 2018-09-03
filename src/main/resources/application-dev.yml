@@ -18,6 +18,11 @@ spring:
     min-idle: 8
     initial-size: 10
 
+
+#mybatis:
+ # mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  #type-aliases-package: com.springbootstudy.demo.entity  # 注意：对应实体类的路径
+
   jpa:
   #ddl-auto:update 通过建立实例bean自动创建更新数据表
     hibernate:
