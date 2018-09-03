@@ -62,7 +62,7 @@ public class UserController  {
         return userService.getAllUsersByMybatis();
     }
 
-    @Transactional
+    @Transactional(value = "transactionalManager2")
     @PostMapping(value = "/addorupateUser")
     public User  addorupateUser(@RequestParam(value = "id" ,required = false) Integer id,
                                 @RequestParam(value = "name" ,required = false) String name,

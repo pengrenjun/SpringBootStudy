@@ -10,11 +10,18 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
+@EnableTransactionManagement
 @MapperScan("com.springbootstudy.demo.mapper.*")
 public class DemoApplication {
 
@@ -44,8 +51,24 @@ public class DemoApplication {
 	}
 
 
+	/*注册两个事务管理器*/
+	@Bean(name = "transactionalManager1")
+    public PlatformTransactionManager transactionalManager1(DataSource dataSource){
+	    return  new DataSourceTransactionManager(dataSource);
+    }
 
-	public static void main(String[] args) {
+    @Bean(name = "transactionalManager2")
+    public PlatformTransactionManager transactionalManager2(EntityManagerFactory  factory){
+        return  new JpaTransactionManager(factory);
+    }
+
+
+    /*@Bean(name = "transactionManager")
+    public PlatformTransactionManager transactionManager(EntityManagerFactory  factory){
+        return  new JpaTransactionManager(factory);
+    }
+*/
+    public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 }
