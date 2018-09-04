@@ -1,7 +1,6 @@
 package com.springbootstudy.demo.mapper.User;
 
 import com.springbootstudy.demo.entity.User;
-import org.springframework.stereotype.Component;
 
 
 import java.util.List;
@@ -17,6 +16,10 @@ public interface UserMapper {
       */
     List <User>  getAllUsers();
 
-    Integer insertNewUser(User user);
-
+    /**
+     * 保存后返回主键id
+     * @param user
+     * @return
+     */
+    Integer  saveorupdateUserB(User user);
 }

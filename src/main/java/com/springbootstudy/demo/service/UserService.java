@@ -9,7 +9,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    //Mybatis�ķ�ʽ
+    //Mybatis�ķ�ʽ
     List<User> getAllUsersByMybatis();
 
     List<User> getAllUsersByLocation(String location);
@@ -21,4 +21,6 @@ public interface UserService {
     User saveorupdateUser(User user);
 
 
+    //Mybatis方式进行数据添加
+    Integer saveorupdateUserB(User user);
 }

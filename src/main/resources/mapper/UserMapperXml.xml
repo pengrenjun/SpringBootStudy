@@ -1,20 +1,91 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.springbootstudy.demo.mapper.User.UserMapper">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springbootstudy.demo.mapper.User.UserMapper" >
+    <resultMap id="BaseResultMap" type="com.springbootstudy.demo.entity.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="birthday" property="birthday"  />
+        <result column="location" property="location" jdbcType="VARCHAR" />
+        <result column="comments" property="comments" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, name, birthday, location,comments
+    </sql>
+    <select id="getAllUsers" resultMap="BaseResultMap"  >
+        select
+        <include refid="Base_Column_List" />
+        from user
 
-    <select id="getAllUsers" resultType="com.sprigbootstudy.demo.entity.User" >
-     select * from  USER
     </select>
 
-    <insert id="insertNewUser">
-        /*Mysql数据库插入时不需指定id,Mysql会自动生成;但在Oracle数据库中要指定id 因为在执行selectKey之后就生成了id 这个id要插入到数据库中*/
-        INSERT  INTO  user(name,birthday,comments,location)
-        VALUES (#{name},#{birthday},#{comments},#{location})
-        /*返回自增主键 Mysql自增主键*/
-        <selectKey keyProperty="id" keyColumn="id" resultType="Integer" order="AFTER">
-            SELECT LAST_INSERT_ID();
-        </selectKey>
+    <!--使用useGeneratedKeys="true" keyProperty="id" 插入数据后 通过get方法可以获取到用户id-->
+    <insert id="saveorupdateUserB" useGeneratedKeys="true" keyProperty="id" parameterType="com.springbootstudy.demo.entity.User" >
+        insert into user ( name, birthday, location,comments)
+        values ( #{name,jdbcType=VARCHAR}, #{birthday},#{location},#{comments})
     </insert>
-
+    <!--
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from user_t
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.xdd.entity.User" >
+        insert into user_t (id, user_name, password,
+        age)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xdd.entity.User" >
+        insert into user_t
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+            <if test="age != null" >
+                age,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null" >
+                #{age,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xdd.entity.User" >
+        update user_t
+        <set >
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null" >
+                age = #{age,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xdd.entity.User" >
+        update user_t
+        set user_name = #{userName,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        age = #{age,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    -->
 </mapper>

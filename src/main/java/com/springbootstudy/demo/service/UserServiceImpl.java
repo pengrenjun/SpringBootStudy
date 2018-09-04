@@ -62,6 +62,12 @@ public class UserServiceImpl implements UserService  {
       return   userRepository.save(user);
     }
 
+    //Mybatis方式添加用户
+    @Override
+    public Integer saveorupdateUserB(User user) {
+        return userMapper.saveorupdateUserB(user);
+    }
+
 }
 
 

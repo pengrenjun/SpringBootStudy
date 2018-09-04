@@ -2,8 +2,8 @@ package com.springbootstudy.demo.controller;
 
 import com.springbootstudy.demo.Annotation.SystemControllerLog;
 import com.springbootstudy.demo.entity.User;
-import com.springbootstudy.demo.mapper.User.UserMapper;
 import com.springbootstudy.demo.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -20,15 +20,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController  {
 
 
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserMapper userMapper;
 
     @SystemControllerLog(description = "getUserInfoByID")
     @RequestMapping(value = "/getUserById", method= RequestMethod.GET)
@@ -61,13 +59,33 @@ public class UserController  {
         return userService.getAllUsers();
     }
 
-    /**Mybatis方式*/
     @GetMapping(value = "/getAllUsersByMyBatis")
     public List<User> getAllUsersByMyBatis(){
         return userService.getAllUsersByMybatis();
     }
 
-    @Transactional(transactionManager = "transactionalManager2")
+
+
+    @Transactional(value = "transactionalManager1")
+    @PostMapping(value = "/addorupateUserB")
+    public Integer  addorupateUserB(@RequestParam(value = "id" ,required = false) Integer id,
+                                @RequestParam(value = "name" ,required = false) String name,
+                                @RequestParam(value = "location" ,required = false) String location,
+                                @RequestParam(value = "comments" ,required = false) String comments,
+                                @RequestParam(value = "birthday" ,required = false) Date birthday) {
+
+        User user=new User();
+        user.setBirthday(birthday);
+        user.setComments(comments);
+        user.setLocation(location);
+        user.setName(name);
+        Integer count= userService.saveorupdateUserB(user);
+        Integer userId=user.getId();
+        log.info("插入的数据总数 ={} 返回的主键Userid ={}",count,userId);
+        return userId;
+    }
+
+    @Transactional(value = "transactionalManager2")
     @PostMapping(value = "/addorupateUser")
     public User  addorupateUser(@RequestParam(value = "id" ,required = false) Integer id,
                                 @RequestParam(value = "name" ,required = false) String name,
@@ -80,42 +98,7 @@ public class UserController  {
         user.setComments(comments);
         user.setLocation(location);
         user.setName(name);
-        user= userService.saveorupdateUser(user);
-        if(comments.length()>10){
-            throw  new RuntimeException("用户的备注信息长度>10");
-        }
-        return user;
-    }
-
-    /**
-      * @Author:  pengrj
-      * @Description:    Mybatis插入用户数据 同时测试事务管理器
-      * @param  id
-     * @param name
-     * @param location
-     * @param comments
-     * @param birthday
-      * @Return com.springbootstudy.demo.entity.User
-      * @Date: Created in 2018/9/3 0003 21:47
-      */
-    @Transactional(transactionManager = "transactionalManager1")
-    @PostMapping(value = "/addorupateUserB")
-    public Integer  addorupateUserB(@RequestParam(value = "id" ,required = false) Integer id,
-                                @RequestParam(value = "name" ,required = false) String name,
-                                @RequestParam(value = "location" ,required = false) String location,
-                                @RequestParam(value = "comments" ,required = false) String comments,
-                                @RequestParam(value = "birthday" ,required = false) Date birthday) {
-        User user=new User();
-        user.setId(id);
-        user.setBirthday(birthday);
-        user.setComments(comments);
-        user.setLocation(location);
-        user.setName(name);
-        Integer idValue= userMapper.insertNewUser(user);
-        if(comments.length()>10){
-            throw  new RuntimeException("用户的备注信息长度>10");
-        }
-        return idValue;
+        return userService.saveorupdateUser(user);
     }
 
 
