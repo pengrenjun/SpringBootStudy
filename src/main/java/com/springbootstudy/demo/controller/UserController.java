@@ -81,6 +81,7 @@ public class UserController  {
         user.setName(name);
         Integer count= userService.saveorupdateUserB(user);
         Integer userId=user.getId();
+
         log.info("插入的数据总数 ={} 返回的主键Userid ={}",count,userId);
         return userId;
     }
