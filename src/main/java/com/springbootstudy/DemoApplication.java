@@ -1,4 +1,4 @@
-package com.springbootstudy.demo;
+package com.springbootstudy;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@MapperScan("com.springbootstudy.demo.mapper.*")
+/*@MapperScan("com.springbootstudy.demo.mapper.*")*/
 public class DemoApplication {
 
 	/**

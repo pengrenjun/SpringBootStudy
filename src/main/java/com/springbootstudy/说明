@@ -1,0 +1,4 @@
+dataSourceTest包 与 demo包 代表两个业务模块
+分别连接两个数据源 用于演示多数据源的配置及使用
+
+dataSourceConfig包里面进行数据源的配置与注册

@@ -6,11 +6,24 @@ server:
 
 project :
   content: "开发环境"
-spring:
 
+#demo包的数据源连接 DataSource1Config
+spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/springstudy
+    jdbc-url: jdbc:mysql://localhost:3306/springstudy?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    max-active: 20
+    max-idle: 8
+    min-idle: 8
+    initial-size: 10
+
+#dataSourceTest包的数据源连接 DataSource2Config
+
+  datasource2:
+    driver-class-name: com.mysql.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/Mybatis?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
     max-active: 20
