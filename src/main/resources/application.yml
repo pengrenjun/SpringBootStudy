@@ -3,6 +3,7 @@ spring:
     active: dev
 
 #公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
+#多数据源的情况里 xml文件与mapper的关联放在了数据源创建的配置类里面了 这块就不需要配置了
 mybatis:
  typeAliasesPackage: com.springbootstudy.demo.entity
- mapperLocations: classpath:mapper/*.xml
+ mapperLocations: classpath:mapperXml/**/*.xml

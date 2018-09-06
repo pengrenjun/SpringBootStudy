@@ -22,7 +22,8 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableTransactionManagement
-/*@MapperScan("com.springbootstudy.demo.mapper.*")*/
+/**多数据源的情况下 @MapperScan放在了数据源创建的配置类里面的,这块可以不用进行扫包*/
+@MapperScan( basePackages = {"com.springbootstudy.demo.mapper","com.springbootstudy.dataSourceTest.mapper"} )
 public class DemoApplication {
 
 	/**

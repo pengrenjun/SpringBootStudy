@@ -66,10 +66,10 @@ public class UserController  {
 
 
 
-    @Transactional(value = "transactionalManager1")
+    @Transactional(value = "test1TransactionManager")
     @PostMapping(value = "/addorupateUserB")
     public Integer  addorupateUserB(@RequestParam(value = "id" ,required = false) Integer id,
-                                @RequestParam(value = "name" ,required = false) String name,
+                                @RequestParam(value = "name" ) String name,
                                 @RequestParam(value = "location" ,required = false) String location,
                                 @RequestParam(value = "comments" ,required = false) String comments,
                                 @RequestParam(value = "birthday" ,required = false) Date birthday) {
@@ -81,7 +81,6 @@ public class UserController  {
         user.setName(name);
         Integer count= userService.saveorupdateUserB(user);
         Integer userId=user.getId();
-
         log.info("插入的数据总数 ={} 返回的主键Userid ={}",count,userId);
         return userId;
     }

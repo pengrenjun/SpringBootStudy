@@ -9,7 +9,7 @@ project :
 
 #demo包的数据源连接 DataSource1Config
 spring:
-  datasource:
+  datasource1:
     driver-class-name: com.mysql.jdbc.Driver
     jdbc-url: jdbc:mysql://localhost:3306/springstudy?useUnicode=true&characterEncoding=utf-8
     username: root
@@ -19,8 +19,7 @@ spring:
     min-idle: 8
     initial-size: 10
 
-#dataSourceTest包的数据源连接 DataSource2Config
-
+    #dataSourceTest包的数据源连接 DataSource2Config
   datasource2:
     driver-class-name: com.mysql.jdbc.Driver
     jdbc-url: jdbc:mysql://localhost:3306/Mybatis?useUnicode=true&characterEncoding=utf-8
@@ -32,8 +31,10 @@ spring:
     initial-size: 10
 
 
+
+
 #mybatis:
- # mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+ # mapperXml-locations: classpath:mapperXml/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   #type-aliases-package: com.springbootstudy.demo.entity  # 注意：对应实体类的路径
 
   jpa:

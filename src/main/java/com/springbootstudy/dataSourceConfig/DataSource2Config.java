@@ -10,6 +10,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -23,7 +24,7 @@ import javax.sql.DataSource;
 
 //DataSource02
 @Configuration // 注册到springboot容器中
-@MapperScan(value="com.springbootstudy.dataSourceTest.mapper.*", sqlSessionFactoryRef = "test2SqlSessionFactory")
+@MapperScan(basePackages = "com.springbootstudy.dataSourceTest.mapper", sqlSessionFactoryRef = "test2SqlSessionFactory")
 public class DataSource2Config {
 
     /**
@@ -47,9 +48,9 @@ public class DataSource2Config {
             throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        // bean.setMapperLocations(
-        // new
-        // PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test1/*.xml"));
+        bean.setMapperLocations(
+         new
+                 PathMatchingResourcePatternResolver().getResources("classpath:mapperXml/dataSourceTest/*.xml"));
         return bean.getObject();
     }
 

@@ -10,6 +10,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -23,7 +24,7 @@ import javax.sql.DataSource;
 
 //DataSource01
 @Configuration // 注册到springboot容器中
-@MapperScan(value="com.springbootstudy.demo.mapper.*", sqlSessionFactoryRef = "test1SqlSessionFactory")
+@MapperScan(basePackages = "com.springbootstudy.demo.mapper", sqlSessionFactoryRef = "test1SqlSessionFactory")
 public class DataSource1Config {
 
     /**
@@ -31,7 +32,7 @@ public class DataSource1Config {
      * @methodDesc: 功能描述:(配置springstudy数据库)
      */
     @Bean(name = "test1DataSource")
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @ConfigurationProperties(prefix = "spring.datasource1")
     @Primary
     public DataSource testDataSource() {
         return DataSourceBuilder.create().build();
@@ -47,9 +48,9 @@ public class DataSource1Config {
             throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        // bean.setMapperLocations(
-        // new
-        // PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test1/*.xml"));
+        bean.setMapperLocations(
+         new
+                 PathMatchingResourcePatternResolver().getResources("classpath:mapperXml/demo/*.xml"));
         return bean.getObject();
     }
 
