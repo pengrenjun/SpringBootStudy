@@ -63,10 +63,12 @@ public class DemoApplication {
         return  new JpaTransactionManager(factory);
     }
 
+
 	@Bean(name = "transactionManager")
 	public PlatformTransactionManager transactionManager(EntityManagerFactory  factory){
 		return  new JpaTransactionManager(factory);
 	}
+
 
 
 
