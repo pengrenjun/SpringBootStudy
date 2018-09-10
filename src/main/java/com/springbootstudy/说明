@@ -2,3 +2,12 @@ dataSourceTest包 与 demo包 代表两个业务模块
 分别连接两个数据源 用于演示多数据源的配置及使用
 
 dataSourceConfig包里面进行数据源的配置与注册
+
+index对两个数据源应用进行共同测试 分别调用了两个数据源的业务代码 实现分库存储数据
+
+dataSourceTest与demo两个包只是实现了多数据源 事务管理器与数据源是绑定的 无法对实现分布式事务管理的业务要求
+
+tomikosJta1与tomikosJta2两个包的业务逻辑代码同dataSourceTest与demo两个包
+只是在对两个包的数据源与事物管理器的配置上不同于dataSourceConfig包里面的代码
+tomikosJta1与tomikosJta2两个包的数据源与事物管理器的配置参照tomilosJtaSourceConfig
+

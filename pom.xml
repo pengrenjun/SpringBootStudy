@@ -116,6 +116,13 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
+        <!-- automatic+jta的分布式事务管理 -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jta-atomikos -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jta-atomikos</artifactId>
+        </dependency>
+
 
 		<!--
     	MyBatis提供了拦截器接口，我们可以实现自己的拦截器，

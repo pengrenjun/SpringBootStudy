@@ -30,8 +30,33 @@ spring:
     min-idle: 8
     initial-size: 10
 
+#基于Springboot+atomikos+jta实现分布式事务统一管理配置的测试两个数据源
+mysql:
+  datasource:
+    test1:
+      url: jdbc:mysql://localhost:3306/springstudy?useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: 123456
+      maintenanceInterval: 60
+      minPoolSize: 3
+      borrowConnectionTimeout: 30
+      maxIdleTime: 60
+      loginTimeout: 30
+      maxPoolSize: 25
+      maxLifetime: 20000
 
 
+    test2:
+      url: jdbc:mysql://localhost:3306/Mybatis?useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: 123456
+      maintenanceInterval: 60
+      minPoolSize: 3
+      borrowConnectionTimeout: 30
+      maxIdleTime: 60
+      loginTimeout: 30
+      maxPoolSize: 25
+      maxLifetime: 20000
 
 #mybatis:
  # mapperXml-locations: classpath:mapperXml/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
@@ -41,7 +66,12 @@ spring:
   #ddl-auto:update 通过建立实例bean自动创建更新数据表
     hibernate:
       ddl-auto: update
+      naming:
+          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect  #不加这句则默认为myisam引擎
     show-sql: true
+
+
   #页面修改项目会自动更新内容  开发关闭themleaf缓存
   thymeleaf:
     cache: false
