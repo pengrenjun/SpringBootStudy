@@ -4,6 +4,7 @@ import com.springbootstudy.demo.Annotation.SystemServiceLog;
 import com.springbootstudy.tomikosJta1.entity.User;
 import com.springbootstudy.tomikosJta1.mapper.User.UserMapperA;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @version:1.0
  */
 @Service
+@Primary
 public class UserServiceImplA implements UserServiceA {
 
 

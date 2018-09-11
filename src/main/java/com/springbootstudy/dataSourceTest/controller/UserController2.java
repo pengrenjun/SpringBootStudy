@@ -28,7 +28,7 @@ public class UserController2 {
     @Autowired
     private UserService userService;
 
-    @SystemControllerLog(description = "getUserInfoByID")
+   /* @SystemControllerLog(description = "getUserInfoByID")
     @RequestMapping(value = "/getUserById", method= RequestMethod.GET)
     public User getProjectDescription(@RequestParam(value = "id" ) Integer id) throws Exception {
         User user=userService.getUserById(id);
@@ -57,7 +57,7 @@ public class UserController2 {
     @GetMapping(value = "/getAllUsers")
     public List<User> userList(){
         return userService.getAllUsers();
-    }
+    }*/
 
     @GetMapping(value = "/getAllUsersByMyBatis")
     public List<User> getAllUsersByMyBatis(){
@@ -85,7 +85,7 @@ public class UserController2 {
         return userId;
     }
 
-    @Transactional(value = "transactionalManager2")
+    /*@Transactional(value = "transactionalManager2")
     @PostMapping(value = "/addorupateUser")
     public User addorupateUser(@RequestParam(value = "id" ,required = false) Integer id,
                                @RequestParam(value = "name" ,required = false) String name,
@@ -99,7 +99,7 @@ public class UserController2 {
         user.setLocation(location);
         user.setName(name);
         return userService.saveorupdateUser(user);
-    }
+    }*/
 
 
 

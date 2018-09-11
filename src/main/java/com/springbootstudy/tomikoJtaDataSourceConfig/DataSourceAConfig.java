@@ -24,11 +24,11 @@ import java.sql.SQLException;
  */
 
 @Configuration
-@MapperScan(basePackages="com.springbootstudy.tomikosJta1",sqlSessionFactoryRef="test1SqlSessionFactory")
+@MapperScan(basePackages="com.springbootstudy.tomikosJta1.mapper",sqlSessionFactoryRef="testASqlSessionFactory")
 public class DataSourceAConfig {
     //配置数据源
-    @Primary
-    @Bean(name="test1Datasource")
+
+    @Bean(name="testADatasource")
     public DataSource testDatasource(DbConfigA config1) throws SQLException {
         MysqlXADataSource mysqlXADataSource=new MysqlXADataSource();
         mysqlXADataSource.setUrl(config1.getUrl());
@@ -39,7 +39,7 @@ public class DataSourceAConfig {
 
         AtomikosDataSourceBean atomikosDataSourceBean=new AtomikosDataSourceBean();
         atomikosDataSourceBean.setXaDataSource(mysqlXADataSource);
-        atomikosDataSourceBean.setUniqueResourceName("test1Datasource");
+        atomikosDataSourceBean.setUniqueResourceName("testADatasource");
 
         atomikosDataSourceBean.setMinPoolSize(config1.getMinPoolSize());
         atomikosDataSourceBean.setMaxPoolSize(config1.getMaxPoolSize());
@@ -50,9 +50,9 @@ public class DataSourceAConfig {
         atomikosDataSourceBean.setMaxIdleTime(config1.getMaxIdleTime());
         return atomikosDataSourceBean;
     }
-    @Primary
-    @Bean(name="test1SqlSessionFactory")
-    public SqlSessionFactory testSqlSessionFactory(@Qualifier("test1Datasource")DataSource dataSource)
+
+    @Bean(name="testASqlSessionFactory")
+    public SqlSessionFactory testSqlSessionFactory(@Qualifier("testADatasource")DataSource dataSource)
             throws Exception {
         SqlSessionFactoryBean bean=new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
@@ -62,9 +62,9 @@ public class DataSourceAConfig {
         return bean.getObject();
     }
 
-    @Primary
-    @Bean(name="test1SqlSessionTemplate")
-    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("test1SqlSessionFactory")
+
+    @Bean(name="testASqlSessionTemplate")
+    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("testASqlSessionFactory")
                                                              SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }

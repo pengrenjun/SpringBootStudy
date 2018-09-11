@@ -21,8 +21,8 @@ public class UserServiceImpl2 implements UserService {
     /***
       * 采用jpa方式与数据库进行交互
       */
-    @Autowired
-    private UserRepository2 userRepository;
+   /* @Autowired
+    private UserRepository2 userRepository;*/
 
     /**
       * 采用Mybatis的方式与数据库进行交互
@@ -42,7 +42,7 @@ public class UserServiceImpl2 implements UserService {
     }
 
 
-    @Override
+   /* @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -70,7 +70,7 @@ public class UserServiceImpl2 implements UserService {
     @Override
     public User saveorupdateUser(User user) {
       return   userRepository.save(user);
-    }
+    }*/
 
 
 

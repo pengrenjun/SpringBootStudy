@@ -22,11 +22,11 @@ import java.sql.SQLException;
  * @version:1.0
  */
 @Configuration
-@MapperScan(basePackages="com.springbootstudy.tomikosJta2",sqlSessionFactoryRef="test2SqlSessionFactory")
+@MapperScan(basePackages="com.springbootstudy.tomikosJta2.mapper",sqlSessionFactoryRef="testBSqlSessionFactory")
 public class DataSourceBConfig {
 
     //配置数据源
-    @Bean(name="test2Datasource")
+    @Bean(name="testBDatasource")
     public DataSource testDatasource(DbConfigB config2) throws SQLException {
         MysqlXADataSource mysqlXADataSource=new MysqlXADataSource();
         mysqlXADataSource.setUrl(config2.getUrl());
@@ -37,7 +37,7 @@ public class DataSourceBConfig {
 
         AtomikosDataSourceBean atomikosDataSourceBean=new AtomikosDataSourceBean();
         atomikosDataSourceBean.setXaDataSource(mysqlXADataSource);
-        atomikosDataSourceBean.setUniqueResourceName("test2Datasource");
+        atomikosDataSourceBean.setUniqueResourceName("testBDatasource");
 
         atomikosDataSourceBean.setMinPoolSize(config2.getMinPoolSize());
         atomikosDataSourceBean.setMaxPoolSize(config2.getMaxPoolSize());
@@ -48,8 +48,8 @@ public class DataSourceBConfig {
         atomikosDataSourceBean.setMaxIdleTime(config2.getMaxIdleTime());
         return atomikosDataSourceBean;
     }
-    @Bean(name="test2SqlSessionFactory")
-    public SqlSessionFactory testSqlSessionFactory(@Qualifier("test2Datasource")DataSource dataSource)
+    @Bean(name="testBSqlSessionFactory")
+    public SqlSessionFactory testSqlSessionFactory(@Qualifier("testBDatasource")DataSource dataSource)
             throws Exception {
         SqlSessionFactoryBean bean=new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
@@ -60,8 +60,8 @@ public class DataSourceBConfig {
         return bean.getObject();
     }
 
-    @Bean(name="test2SqlSessionTemplate")
-    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("test2SqlSessionFactory")
+    @Bean(name="testBSqlSessionTemplate")
+    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("testBSqlSessionFactory")
                                                              SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }

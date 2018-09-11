@@ -5,6 +5,7 @@ import com.springbootstudy.tomikosJta1.entity.User;
 import com.springbootstudy.tomikosJta1.service.UserServiceA;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;

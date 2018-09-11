@@ -3,10 +3,13 @@ package com.springbootstudy;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.springbootstudy.tomikoJtaDataSourceConfig.DbConfigEntity.DbConfigA;
+import com.springbootstudy.tomikoJtaDataSourceConfig.DbConfigEntity.DbConfigB;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -15,6 +18,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ import java.util.List;
 @EnableTransactionManagement
 /**多数据源的情况下 @MapperScan放在了数据源创建的配置类里面的,这块可以不用进行扫包*/
 @MapperScan( basePackages = {"com.springbootstudy.demo.mapper","com.springbootstudy.dataSourceTest.mapper"} )
+@EnableConfigurationProperties(value = { DbConfigA.class, DbConfigB.class })
 public class DemoApplication {
 
 	/**
@@ -68,6 +73,8 @@ public class DemoApplication {
 	public PlatformTransactionManager transactionManager(EntityManagerFactory  factory){
 		return  new JpaTransactionManager(factory);
 	}
+
+
 
 
 

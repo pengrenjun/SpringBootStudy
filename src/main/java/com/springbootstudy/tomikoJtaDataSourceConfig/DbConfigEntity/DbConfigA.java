@@ -2,6 +2,8 @@ package com.springbootstudy.tomikoJtaDataSourceConfig.DbConfigEntity;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @Description: 配置信息的实体映射
@@ -11,6 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "mysql.datasource.test1")
 @Data
+
+/*扫描装载配置的Bean @Configuration -> @EnableConfigurationProperties(value = { DbConfigA.class, DbConfigB.class })*/
 public class DbConfigA {
 
     private String url;

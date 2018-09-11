@@ -15,7 +15,7 @@ public interface UserService {
     //Mybatis方式进行数据添加
     Integer saveorupdateUserB(User user);
 
-   List<User> getAllUsers();
+   /*List<User> getAllUsers();
 
     List<User> getAllUsersByLocation(String location);
 
@@ -23,7 +23,7 @@ public interface UserService {
 
     void deleteUserById(Integer id);
 
-    User saveorupdateUser(User user);
+    User saveorupdateUser(User user);*/
 
 
 

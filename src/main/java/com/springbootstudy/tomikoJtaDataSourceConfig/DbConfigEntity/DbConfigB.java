@@ -2,6 +2,7 @@ package com.springbootstudy.tomikoJtaDataSourceConfig.DbConfigEntity;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @Description: 配置文件的实体映射类
@@ -11,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "mysql.datasource.test2")
 @Data
+/*@Configuration*/
 public class DbConfigB {
 
     private String url;
