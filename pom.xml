@@ -125,6 +125,28 @@
 			<optional>true</optional>
 		</dependency>
 
+        <!--SpringBoot 监控中心 项目作为客户端注册到服务端所需Jar包》》》》》》》》》》》》》》-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+        </dependency>
+        <!--SpringBoot 监控中心 项目作为客户端注册到服务端所需Jar包《《《《《《《《《《《《《《《《《《-->
+
+
+
 
 		<!--
     	MyBatis提供了拦截器接口，我们可以实现自己的拦截器，
@@ -137,11 +159,6 @@
 			<artifactId>pagehelper</artifactId>
 			<version>4.1.0</version>
 		</dependency>
-
-
-
-
-
 
 
 
