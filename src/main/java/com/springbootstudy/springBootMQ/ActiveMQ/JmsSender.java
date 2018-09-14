@@ -25,7 +25,7 @@ public class JmsSender {
     private Topic topic;
 
     @Autowired
-    private JmsMessagingTemplate jmsTemplate;
+    private JmsMessagingTemplate jmsTemplate ;
 
     public void sendByQueue(String message) {
         log.info("JmsSender:sendByQueue 发送的队列消息{}",message);
