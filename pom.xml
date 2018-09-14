@@ -146,6 +146,19 @@
         <!--SpringBoot 监控中心 项目作为客户端注册到服务端所需Jar包《《《《《《《《《《《《《《《《《《-->
 
 
+       <!-- 整合 springBootMQ  添加依赖》》》》》》》》》》》》》》-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+        <!-- 如果需要配置连接池，添加如下依赖 -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+        </dependency>
+        <!-- 整合 springBootMQ  添加依赖《《《《《《《《《《《《《《《《-->
+
+
 
 
 		<!--
