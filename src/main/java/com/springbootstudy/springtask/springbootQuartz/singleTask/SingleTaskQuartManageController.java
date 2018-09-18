@@ -42,7 +42,7 @@ public class SingleTaskQuartManageController {
         System.err.println("当前trigger使用的-"+currentCron);
         log.info("当前trigger使用的-"+currentCron);
         String cron=MessageFormat.format(CRON_STR, prod.toString());
-        //设置执行的时间间隔
+        //设置执行的时间间隔 需要存入数据库中 系统启动之后时间从数据库中读取
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cron);
         // 按新的cronExpression表达式重新构建trigger
         trigger = (CronTrigger) scheduler.getTrigger(cronTrigger.getKey());
