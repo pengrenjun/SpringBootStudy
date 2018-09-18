@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -29,6 +30,7 @@ import java.util.List;
 /**多数据源的情况下 @MapperScan放在了数据源创建的配置类里面的,这块可以不用进行扫包*/
 @MapperScan( basePackages = {"com.springbootstudy.demo.mapper","com.springbootstudy.dataSourceTest.mapper"} )
 @EnableConfigurationProperties(value = { DbConfigA.class, DbConfigB.class })
+@EnableScheduling/*注解开启对定时任务的支持，然后启动项目*/
 public class DemoApplication {
 
 	/**

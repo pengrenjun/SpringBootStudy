@@ -160,6 +160,13 @@
 
 
 
+		<!--SpringBoot整合Quartz-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
+
+
 
 		<!--
     	MyBatis提供了拦截器接口，我们可以实现自己的拦截器，
