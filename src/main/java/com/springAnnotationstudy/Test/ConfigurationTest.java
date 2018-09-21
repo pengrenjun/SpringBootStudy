@@ -27,10 +27,41 @@ public class ConfigurationTest {
             System.out.println("OrderConfig配置类里面的组件名称：>>>>>>"+str);
         }
 
+    }
+
+    /**测试@Scope组件*/
+    @Test
+    public void testScopeAnnotation(){
+
+        //从spring的IOC容器中获取注解配置类
+        ApplicationContext applicationContext= new AnnotationConfigApplicationContext(OrderConfig.class);
+
+        //创建一个多实例的Bean Order
+        Order orderA=(Order)applicationContext.getBean("orderB");
+        Order orderB=(Order)applicationContext.getBean("orderB");
+
+        System.out.println(orderA==orderB);
+
+        //获取单实例对象
+        Order order1=(Order)applicationContext.getBean("orderA");
+        order1.setOrderName("小米测试机");
+        Order order2=(Order)applicationContext.getBean("orderA");
+        System.out.println(order2.getOrderName());
+        System.out.println(order1==order2);
+
 
     }
 
+    /**测试@lazy 注解的作用*/
+    @Test
+    public void testLazyAnnotation(){
 
+        //从spring的IOC容器中获取注解配置类
+        ApplicationContext applicationContext= new AnnotationConfigApplicationContext(OrderConfig.class);
+
+        Order orderC1=(Order)applicationContext.getBean("orderC");
+        Order orderC2=(Order)applicationContext.getBean("orderC");
+    }
 
     public static void main(String[] args) {
 
