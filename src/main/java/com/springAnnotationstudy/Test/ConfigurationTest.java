@@ -2,6 +2,7 @@ package com.springAnnotationstudy.Test;
 
 import com.springAnnotationstudy.Bean.Order;
 import com.springAnnotationstudy.Config.OrderConfig;
+import com.springAnnotationstudy.Config.OrderConfig2;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -61,6 +62,19 @@ public class ConfigurationTest {
 
         Order orderC1=(Order)applicationContext.getBean("orderC");
         Order orderC2=(Order)applicationContext.getBean("orderC");
+    }
+
+
+    /*测试@Import注解的使用*/
+    @Test
+    public void testImportAnnotation(){
+        //从spring的IOC容器中获取注解配置类
+        ApplicationContext applicationContext= new AnnotationConfigApplicationContext(OrderConfig2.class);
+        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+        for(String beanName:beanDefinitionNames){
+            System.out.println("OrderConfig2.class>>>>>>>>>>>>>>>"+beanName);
+            //OrderConfig2.class>>>>>>>>>>>>>>>com.springAnnotationstudy.Bean.Shop
+        }
     }
 
     public static void main(String[] args) {
